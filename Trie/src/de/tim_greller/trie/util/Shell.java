@@ -55,12 +55,13 @@ public final class Shell {
 			break;
 			
 		default:
-			printError("unknown command \"" + cmd + "\"");
+			printError("Unknown command \"" + cmd + "\"");
 		}
 	}
 
 	private static void printError(String msg) {
 		System.out.println("Error! " + msg);
+		System.out.println("Enter 'help' to display the syntax.");
 	}
 
 	private static void printHelp() {
