@@ -64,6 +64,23 @@ public final class Shell {
 	}
 
 	private static void printHelp() {
+		System.out.println(
+			  "Trie enables you to store integers in a tree data structure "
+			+ "using strings as keys.\n\n"
+			+ "Available commands:\n"
+			+ "add <key> <value>     Inserts the value for a new key into "
+			+ "the trie. Fails if the key already has a value assigned.\n"
+			+ "change <key> <value>  Changes the value for the given key. "
+			+ "Fails if no value is associated with the key.\n"
+			+ "delete <key>          Removes a data element. Fails if no "
+			+ "value is associated with the key.\n"
+			+ "points <key>          Prints the value of the specified key. "
+			+ "Fails if no value is associated with the key.\n"
+			+ "trie   Prints the structure of the current trie.\n"
+			+ "help   Shows this help text.\n"
+			+ "new    Creates a new trie and discards the old data structure.\n"
+			+ "quit   Exits the program."
+		);
 	}
 
 
