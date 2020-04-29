@@ -1,14 +1,14 @@
 package de.tim_greller.trie.model;
 
-public class Trie<T> {
+public class Trie {
 	
-	Node<T> root;
+	Node root;
 	
 	public Trie() {
-		root = new Node<T>('+', null);
+		root = new Node('+', null);
 	}
 
-	public boolean add(String key, T val) {
+	public boolean add(String key, Integer value) {
 		return true;
 	}
 	
@@ -16,11 +16,11 @@ public class Trie<T> {
 		return true;
 	}
 	
-	public boolean change(String key, T newValue) {
+	public boolean change(String key, Integer newValue) {
 		return true;
 	}
 	
-	public T getValue(String key) {
+	public Integer points(String key) {
 		return root.value;
 	}
 	
