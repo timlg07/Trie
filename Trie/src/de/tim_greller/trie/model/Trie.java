@@ -5,10 +5,23 @@ public class Trie {
 	Node root;
 	
 	public Trie() {
-		root = new Node('+', null);
+		root = new Node();
 	}
 
-	public boolean add(String key, Integer value) {
+	public boolean add(String key, Integer points) {
+		Node iterator = root;
+		for (char ch : key.toCharArray()) {
+			Node child = iterator.getChild(ch);
+			if (child == null) {
+				child = new Node(ch, iterator);
+				iterator.setChild(ch, child);
+			}
+			iterator = child;
+		}
+		if (iterator.getPoints() != null) {
+			return false;
+		}
+		iterator.setPoints(points);
 		return true;
 	}
 	
@@ -16,12 +29,12 @@ public class Trie {
 		return true;
 	}
 	
-	public boolean change(String key, Integer newValue) {
+	public boolean change(String key, Integer points) {
 		return true;
 	}
 	
 	public Integer points(String key) {
-		return root.value;
+		return root.getPoints();
 	}
 	
 	@Override

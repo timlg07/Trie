@@ -2,29 +2,29 @@ package de.tim_greller.trie.model;
 
 public class Node {
 
-	char character;
-	Node parent;
-	Node[] children;
-	Integer value;
+	private char ch;
+	private Node parent;
+	private Node[] children;
+	private Integer points;
 	
-	public Node(char character, Node parent) {
-		this(character, parent, null);
+	public Node() {
+		this('+', null);
 	}
 	
-	public Node(char character, Node parent, Integer value) {
-		this.character = character;
+	public Node(char ch, Node parent) {
+		this.ch = ch;
 		this.parent = parent;
 		this.children = new Node[25];
-		this.value = value;
+		this.points = null;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder stringRepresentation = new StringBuilder();
-		stringRepresentation.append(character);
+		stringRepresentation.append(ch);
 		
-		if (value != null) {
-			stringRepresentation.append('[').append(value).append(']');
+		if (points != null) {
+			stringRepresentation.append('[').append(points).append(']');
 		}
 		
 		if (hasChildren()) {
@@ -48,6 +48,22 @@ public class Node {
 			}
 		}
 		return result;
+	}
+
+	public Node getChild(char ch) {
+		return children[ch - 'a'];
+	}
+	
+	public void setChild(char ch, Node child) {
+		children[ch - 'a'] = child;
+	}
+	
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+	
+	public Integer getPoints() {
+		return points;
 	}
 
 }

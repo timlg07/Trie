@@ -77,7 +77,9 @@ public final class Shell {
 		String val = tokenizedCommand[2];
 		if (isValidKey(key) && isValidNumber(val)) {
 			Integer parsedValue = Integer.valueOf(val);
-			trie.add(key, parsedValue);
+			if (!trie.add(key, parsedValue)) {
+				printError("The key \"" + key + "\" already has a value assigned.");
+			}
 		}
 	}
 
