@@ -10,7 +10,7 @@ public final class Shell {
 	
 	private static final String PROMPT = "trie> ";
 	private static boolean continueExecution = true;
-	private static Trie trie = new Trie();
+	private static Trie<Integer> trie = new Trie<Integer>();
 	
 	private Shell() {}
 	
@@ -43,7 +43,7 @@ public final class Shell {
 		
 		switch (cmd) {
 		case "new": 
-			trie = new Trie(); 
+			trie = new Trie<Integer>(); 
 			break;
 		
 		case "help":
