@@ -68,7 +68,7 @@ public final class Shell {
 	}
 
 	private static void addToTrie(String[] tokenizedCommand) {
-		if (tokenizedCommand.length < 2) {
+		if (tokenizedCommand.length < 3) {
 			printError("Missing parameter(s). Key and Value required.");
 			return;
 		}
