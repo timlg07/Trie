@@ -1,6 +1,6 @@
 package de.tim_greller.trie.model;
 
-public class Trie {
+public class Trie<T> {
 	
 	Node root;
 	
