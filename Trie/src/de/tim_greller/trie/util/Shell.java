@@ -54,9 +54,50 @@ public final class Shell {
 			continueExecution = false;
 			break;
 			
+		case "trie":
+			System.out.println(trie);
+			break;
+			
+		case "add":
+			addToTrie(tokenizedCommand);
+			break;
+			
 		default:
 			printError("Unknown command \"" + cmd + "\"");
 		}
+	}
+
+	private static void addToTrie(String[] tokenizedCommand) {
+		if (tokenizedCommand.length < 2) {
+			printError("Missing parameter(s). Key and Value required.");
+			return;
+		}
+		
+		String key = tokenizedCommand[1];
+		String val = tokenizedCommand[2];
+		if (isValidKey(key) && isValidNumber(val)) {
+			Integer parsedValue = Integer.valueOf(val);
+			trie.add(key, parsedValue);
+		}
+	}
+
+	private static boolean isValidKey(String key) {
+		if (key.equals(key.toLowerCase())) {
+			return true;
+		} else {
+			printError("The key must contain lowercase letters only.");
+			return false;
+		}
+	}
+	
+	private static boolean isValidNumber(String val) {
+		try {
+			Integer.valueOf(val);
+		} catch (NumberFormatException e){
+			printError("The value has to be an integer.");
+			return false;
+		}
+		return true;
 	}
 
 	private static void printError(String msg) {
@@ -80,7 +121,8 @@ public final class Shell {
 			+ "trie   Prints the structure of the current trie.\n"
 			+ "help   Shows this help text.\n"
 			+ "new    Creates a new trie and discards the old data structure.\n"
-			+ "quit   Exits the program."
+			+ "quit   Exits the program.\n\n"
+			+ "Note that the key must contain lowercase letters only."
 		);
 	}
 
