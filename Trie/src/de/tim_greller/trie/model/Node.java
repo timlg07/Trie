@@ -18,6 +18,36 @@ public class Node {
 		this.value = value;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder stringRepresentation = new StringBuilder();
+		stringRepresentation.append(character);
+		
+		if (value != null) {
+			stringRepresentation.append('[').append(value).append(']');
+		}
+		
+		if (hasChildren()) {
+			stringRepresentation.append('(');
+			for (Node child : children) {
+				if (child != null) {
+					stringRepresentation.append(child);
+				}
+			}
+			stringRepresentation.append(')');
+		}
+		
+		return stringRepresentation.toString();
+	}
+	
+	private boolean hasChildren() {
+		boolean result = false;
+		for (Node child : children) {
+			if (child != null) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 }
