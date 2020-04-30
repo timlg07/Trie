@@ -26,7 +26,7 @@ public final class Shell {
 		System.out.print(PROMPT);
 		String input = stdin.readLine();
 		
-		// no more input
+		// exit program if EOF (end of file) is reached
 		if (input == null) {
 			continueExecution = false;
 			return; 
@@ -69,6 +69,7 @@ public final class Shell {
 			
 		default:
 			printError("Unknown command \"" + cmd + "\"");
+			break;
 		}
 	}
 
@@ -78,14 +79,15 @@ public final class Shell {
 			return;
 		}
 		
-		String key = tokenizedCommand[1];
-		String val = tokenizedCommand[2];
-		if (isValidKey(key) && isValidNumber(val)) {
-			Integer parsedValue = Integer.valueOf(val);
-			if (!trie.add(key, parsedValue)) {
-				printError("The key \"" + key + "\" already has a value assigned.");
-			}
-		}
+        String key = tokenizedCommand[1];
+        String num = tokenizedCommand[2];
+        if (isValidKey(key) && isValidNumber(num)) {
+            Integer parsedNumber = Integer.valueOf(num);
+            // show error message if adding fails.
+            if (!trie.add(key, parsedNumber)) {
+                printError("The key \"" + key + "\" already has a value assigned.");
+            }
+        }
 	}
 
 	private static boolean isValidKey(String key) {
