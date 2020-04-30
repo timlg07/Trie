@@ -71,6 +71,10 @@ public final class Shell {
             addToTrie(tokenizedCommand);
             break;
             
+        case "change":
+            changeValueInTrie(tokenizedCommand);
+            break;
+            
         default:
             printError("Unknown command \"" + cmd + "\"");
             break;
@@ -87,10 +91,27 @@ public final class Shell {
         String num = tokenizedCommand[2];
         if (isValidKey(key) && isValidNumber(num)) {
             Integer parsedNumber = Integer.valueOf(num);
-            // show error message if adding fails.
+            // Show error message if adding fails.
             if (!trie.add(key, parsedNumber)) {
                 printError("The key \"" + key + 
                         "\" already has a value assigned.");
+            }
+        }
+    }
+
+    private static void changeValueInTrie(String[] tokenizedCommand) {
+        if (tokenizedCommand.length < 3) {
+            printError("Missing parameter(s). Key and Value required.");
+            return;
+        }
+        
+        String key = tokenizedCommand[1];
+        String num = tokenizedCommand[2];
+        if (isValidKey(key) && isValidNumber(num)) {
+            Integer parsedNumber = Integer.valueOf(num);
+            // Show error message if key does not hold a value.
+            if (!trie.change(key, parsedNumber)) {
+                printError("The key \"" + key + "\" does not hold a value.");
             }
         }
     }
