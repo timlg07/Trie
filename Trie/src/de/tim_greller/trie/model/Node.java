@@ -34,6 +34,23 @@ public class Node {
         return next.find(remainingKey);
     }
     
+    private void remove() {
+        setPoints(null);
+        parent.cleanup(ch - 'a');
+    }
+    
+    private void cleanup(int index) {
+        if (children[index].isUnnecessary()) {
+            children[index] = null;
+            parent.cleanup(ch - 'a');
+        }
+    }
+
+    // A node is unnecessary if it contains no value and no children.
+    private boolean isUnnecessary() {
+        return getPoints() == null && !hasChildren();
+    }
+
     @Override
     public String toString() {
         StringBuilder stringRepresentation = new StringBuilder();
@@ -70,7 +87,9 @@ public class Node {
         return children[ch - 'a'];
     }
     
-    public void setChild(char ch, Node child) {
+    // if this is should be private how is the trie
+    // supposed to add any elements?
+    /*private*/ void setChild(char ch, Node child) {
         children[ch - 'a'] = child;
     }
     
