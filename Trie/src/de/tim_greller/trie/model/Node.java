@@ -34,7 +34,7 @@ public class Node {
         return next.find(remainingKey);
     }
     
-    private void remove() {
+    public void remove() {
         setPoints(null);
         parent.cleanup(ch - 'a');
     }
@@ -42,11 +42,14 @@ public class Node {
     private void cleanup(int index) {
         if (children[index].isUnnecessary()) {
             children[index] = null;
-            parent.cleanup(ch - 'a');
+            // Stop recursion when root is reached.
+            if (parent != null) {
+                parent.cleanup(ch - 'a');
+            }
         }
     }
 
-    // A node is unnecessary if it contains no value and no children.
+    // A node is considered unnecessary if it contains no value and no children.
     private boolean isUnnecessary() {
         return getPoints() == null && !hasChildren();
     }
