@@ -30,6 +30,14 @@ public class Trie {
     }
     
     public boolean change(String key, Integer points) {
+        Node target = root.find(key);
+        
+        // Unable to change value if no entry exists for the given key.
+        if (target == null || target.getPoints() == null) {
+            return false;
+        }
+        
+        target.setPoints(points);
         return true;
     }
     
