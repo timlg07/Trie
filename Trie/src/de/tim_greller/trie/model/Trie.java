@@ -25,9 +25,6 @@ public class Trie {
         return true;
     }
     
-    public boolean remove(String key) {
-        return true;
-    }
     
     public boolean change(String key, Integer points) {
         Node target = root.find(key);
@@ -38,6 +35,18 @@ public class Trie {
         }
         
         target.setPoints(points);
+        return true;
+    }
+    
+    public boolean remove(String key) {
+        Node target = root.find(key);
+        
+        // Unable to remove value if no entry exists for the given key.
+        if (target == null || target.getPoints() == null) {
+            return false;
+        }
+        
+        target.remove();
         return true;
     }
     
