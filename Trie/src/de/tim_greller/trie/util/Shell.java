@@ -75,6 +75,10 @@ public final class Shell {
             changeValueInTrie(tokenizedCommand);
             break;
             
+        case "remove":
+            removeFromTrie(tokenizedCommand);
+            break;
+            
         default:
             printError("Unknown command \"" + cmd + "\"");
             break;
@@ -111,6 +115,21 @@ public final class Shell {
             Integer parsedNumber = Integer.valueOf(num);
             // Show error message if key does not hold a value.
             if (!trie.change(key, parsedNumber)) {
+                printError("The key \"" + key + "\" does not hold a value.");
+            }
+        }
+    }
+
+    private static void removeFromTrie(String[] tokenizedCommand) {
+        if (tokenizedCommand.length < 2) {
+            printError("Missing parameter(s). Key and Value required.");
+            return;
+        }
+        
+        String key = tokenizedCommand[1];
+        if (isValidKey(key)) {
+            // Show error message if key does not hold a value.
+            if (!trie.remove(key)) {
                 printError("The key \"" + key + "\" does not hold a value.");
             }
         }
