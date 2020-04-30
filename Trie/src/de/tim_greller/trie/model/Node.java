@@ -14,7 +14,7 @@ public class Node {
 	public Node(char ch, Node parent) {
 		this.ch = ch;
 		this.parent = parent;
-		this.children = new Node[25];
+		this.children = new Node[26];
 		this.points = null;
 	}
 	

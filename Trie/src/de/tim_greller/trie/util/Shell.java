@@ -84,12 +84,16 @@ public final class Shell {
 	}
 
 	private static boolean isValidKey(String key) {
-		if (key.equals(key.toLowerCase())) {
-			return true;
-		} else {
-			printError("The key must contain lowercase letters only.");
-			return false;
+		// check each character individually
+		for (char ch : key.toCharArray()) {
+			// check value because `Character.isLowerCase(ch)` returns true for
+			// characters outside the supported range (e.g.: �, �, ...).
+			if (ch < 'a' || ch > 'z') {
+				printError("The key must contain lowercase letters only.");
+				return false;
+			}
 		}
+		return true;
 	}
 	
 	private static boolean isValidNumber(String val) {
