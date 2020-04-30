@@ -15,11 +15,14 @@ public final class Shell {
     private Shell() {}
     
     public static void main(String[] args) throws IOException {
-        BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdin = new BufferedReader(
+                new InputStreamReader(System.in));
 
         while (continueExecution) {
             readInput(stdin);
         }
+
+        stdin.close();
     }
 
     private static void readInput(BufferedReader stdin) throws IOException {
@@ -43,7 +46,8 @@ public final class Shell {
 
     private static void executeCommand(String[] tokenizedCommand) {
         // The command-array is never empty, because spaces get removed by trim
-        // and splitting an empty strings returns an array containing an empty string.
+        // and splitting an empty string returns an array containing an empty 
+        // string.
         String cmd = tokenizedCommand[0];
         
         switch (cmd) {
@@ -85,7 +89,8 @@ public final class Shell {
             Integer parsedNumber = Integer.valueOf(num);
             // show error message if adding fails.
             if (!trie.add(key, parsedNumber)) {
-                printError("The key \"" + key + "\" already has a value assigned.");
+                printError("The key \"" + key + 
+                        "\" already has a value assigned.");
             }
         }
     }
@@ -94,7 +99,7 @@ public final class Shell {
         // check each character individually
         for (char ch : key.toCharArray()) {
             // check value because `Character.isLowerCase(ch)` returns true for
-            // characters outside the supported range (e.g.: �, �, ...).
+            // characters outside the supported range (e.g.: ö, ü, ...).
             if (ch < 'a' || ch > 'z') {
                 printError("The key must contain lowercase letters only.");
                 return false;
