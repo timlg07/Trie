@@ -9,6 +9,8 @@ public class Trie {
     }
 
     public boolean add(String key, Integer points) {
+        // Navigate to the Node with the given key and append missing Nodes on
+        // the way.
         Node iterator = root;
         for (char ch : key.toCharArray()) {
             Node child = iterator.getChild(ch);
@@ -18,9 +20,12 @@ public class Trie {
             }
             iterator = child;
         }
+        
+        // Do not do anything if the key already has a value assigned.
         if (iterator.getPoints() != null) {
             return false;
         }
+        
         iterator.setPoints(points);
         return true;
     }
@@ -51,7 +56,8 @@ public class Trie {
     }
     
     public Integer points(String key) {
-        return root.getPoints();
+        Node target = root.find(key);
+        return target == null ? null : target.getPoints();
     }
     
     @Override

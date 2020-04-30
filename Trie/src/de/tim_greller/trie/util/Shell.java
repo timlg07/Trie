@@ -75,8 +75,12 @@ public final class Shell {
             changeValueInTrie(tokenizedCommand);
             break;
             
-        case "remove":
+        case "delete":
             removeFromTrie(tokenizedCommand);
+            break;
+            
+        case "points":
+            printValueFromTrie(tokenizedCommand);
             break;
             
         default:
@@ -122,7 +126,7 @@ public final class Shell {
 
     private static void removeFromTrie(String[] tokenizedCommand) {
         if (tokenizedCommand.length < 2) {
-            printError("Missing parameter(s). Key and Value required.");
+            printError("Missing parameter. Key required.");
             return;
         }
         
@@ -132,6 +136,23 @@ public final class Shell {
             if (!trie.remove(key)) {
                 printError("The key \"" + key + "\" does not hold a value.");
             }
+        }
+    }
+
+    private static void printValueFromTrie(String[] tokenizedCommand) {
+        if (tokenizedCommand.length < 2) {
+            printError("Missing parameter. Key required.");
+            return;
+        }
+        
+        String key = tokenizedCommand[1];
+        if (isValidKey(key)) {
+            Integer points = trie.points(key);
+            // Show error message if key does not hold a value.
+            if (points == null) {
+                printError("The key \"" + key + "\" does not hold a value.");
+            }
+            System.out.println(points);
         }
     }
 
