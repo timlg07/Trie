@@ -18,6 +18,22 @@ public class Node {
         this.points = null;
     }
     
+    public Node find(String key) {
+        // Base case: reached end of key.
+        if (key.isEmpty()) {
+            return this;
+        }
+
+        Node next = getChild(key.charAt(0));
+        String remainingKey = key.substring(1);
+        // Return null if the searched Node does not exist.
+        if (next == null) {
+            return null;
+        }
+        // Recursively continue at the next level.
+        return next.find(remainingKey);
+    }
+    
     @Override
     public String toString() {
         StringBuilder stringRepresentation = new StringBuilder();
