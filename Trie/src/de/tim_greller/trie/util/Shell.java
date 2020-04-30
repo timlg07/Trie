@@ -8,7 +8,6 @@ import de.tim_greller.trie.model.Trie;
 
 public final class Shell {
     
-    private static final String PROMPT = "trie> ";
     private static boolean continueExecution = true;
     private static Trie trie = new Trie();
     
@@ -26,63 +25,63 @@ public final class Shell {
     }
 
     private static void readInput(BufferedReader stdin) throws IOException {
-        System.out.print(PROMPT);
+        System.out.print("trie> ");
         String input = stdin.readLine();
-        
+
         // exit program if EOF (end of file) is reached
         if (input == null) {
             continueExecution = false;
-            return; 
+            return;
         }
-        
+
         // showing the prompt again if no input was given
         if (input.isBlank()) {
             return;
         }
-        
+
         String[] tokenizedCommand = input.trim().split("\\s+");
         executeCommand(tokenizedCommand);
     }
 
     private static void executeCommand(String[] tokenizedCommand) {
         // The command-array is never empty, because spaces get removed by trim
-        // and splitting an empty string returns an array containing an empty 
+        // and splitting an empty string returns an array containing an empty
         // string.
         String cmd = tokenizedCommand[0];
-        
+
         switch (cmd) {
-        case "new": 
-            trie = new Trie(); 
+        case "new":
+            trie = new Trie();
             break;
-        
+
         case "help":
             printHelp();
             break;
-            
+
         case "quit":
             continueExecution = false;
             break;
-            
+
         case "trie":
             System.out.println(trie);
             break;
-            
+
         case "add":
             addToTrie(tokenizedCommand);
             break;
-            
+
         case "change":
             changeValueInTrie(tokenizedCommand);
             break;
-            
+
         case "delete":
             removeFromTrie(tokenizedCommand);
             break;
-            
+
         case "points":
             printValueFromTrie(tokenizedCommand);
             break;
-            
+
         default:
             printError("Unknown command \"" + cmd + "\"");
             break;
@@ -94,7 +93,7 @@ public final class Shell {
             printError("Missing parameter(s). Key and Value required.");
             return;
         }
-        
+
         String key = tokenizedCommand[1];
         String num = tokenizedCommand[2];
         if (isValidKey(key) && isValidNumber(num)) {
@@ -112,7 +111,7 @@ public final class Shell {
             printError("Missing parameter(s). Key and Value required.");
             return;
         }
-        
+
         String key = tokenizedCommand[1];
         String num = tokenizedCommand[2];
         if (isValidKey(key) && isValidNumber(num)) {
@@ -129,7 +128,7 @@ public final class Shell {
             printError("Missing parameter. Key required.");
             return;
         }
-        
+
         String key = tokenizedCommand[1];
         if (isValidKey(key)) {
             // Show error message if key does not hold a value.
@@ -144,7 +143,7 @@ public final class Shell {
             printError("Missing parameter. Key required.");
             return;
         }
-        
+
         String key = tokenizedCommand[1];
         if (isValidKey(key)) {
             Integer points = trie.points(key);
@@ -168,11 +167,11 @@ public final class Shell {
         }
         return true;
     }
-    
+
     private static boolean isValidNumber(String val) {
         try {
             Integer.valueOf(val);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             printError("The value has to be an integer.");
             return false;
         }
@@ -204,6 +203,5 @@ public final class Shell {
             + "Note that the key must contain lowercase letters only."
         );
     }
-
 
 }
