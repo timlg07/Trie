@@ -32,6 +32,11 @@ public final class Shell {
 			return; 
 		}
 		
+		// showing the prompt again if no input was given
+		if (input.isBlank()) {
+			return;
+		}
+		
 		String[] tokenizedCommand = input.trim().split("\\s+");
 		executeCommand(tokenizedCommand);
 	}
