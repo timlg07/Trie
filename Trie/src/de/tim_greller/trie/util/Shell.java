@@ -101,7 +101,7 @@ public final class Shell {
             // Show error message if adding fails.
             if (!trie.add(key, parsedNumber)) {
                 printError("The key \"" + key + 
-                        "\" already has a value assigned.");
+                           "\" already has a value assigned.");
             }
         }
     }

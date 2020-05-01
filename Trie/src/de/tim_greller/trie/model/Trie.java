@@ -1,9 +1,9 @@
 package de.tim_greller.trie.model;
 
 public class Trie {
-    
+
     Node root;
-    
+
     public Trie() {
         root = new Node();
     }
@@ -20,46 +20,45 @@ public class Trie {
             }
             iterator = child;
         }
-        
+
         // Do not do anything if the key already has a value assigned.
         if (iterator.getPoints() != null) {
             return false;
         }
-        
+
         iterator.setPoints(points);
         return true;
     }
-    
-    
+
     public boolean change(String key, Integer points) {
         Node target = root.find(key);
-        
+
         // Unable to change value if no entry exists for the given key.
         if (target == null || target.getPoints() == null) {
             return false;
         }
-        
+
         target.setPoints(points);
         return true;
     }
-    
+
     public boolean remove(String key) {
         Node target = root.find(key);
-        
+
         // Unable to remove value if no entry exists for the given key.
         if (target == null || target.getPoints() == null) {
             return false;
         }
-        
+
         target.remove();
         return true;
     }
-    
+
     public Integer points(String key) {
         Node target = root.find(key);
         return target == null ? null : target.getPoints();
     }
-    
+
     @Override
     public String toString() {
         return root.toString();
