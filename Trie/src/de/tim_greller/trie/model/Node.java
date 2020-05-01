@@ -90,8 +90,7 @@ public class Node {
         return children[ch - 'a'];
     }
 
-    // if this is should be private how is the trie
-    // supposed to add any elements?
+    // if this should be private how is the trie supposed to add any elements?
     /*private*/ void setChild(char ch, Node child) {
         children[ch - 'a'] = child;
     }

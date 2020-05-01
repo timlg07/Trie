@@ -39,15 +39,15 @@ public final class Shell {
             return;
         }
 
-        String[] tokenizedCommand = input.trim().split("\\s+");
-        executeCommand(tokenizedCommand);
+        String[] tokenizedInput = input.trim().split("\\s+");
+        executeCommand(tokenizedInput);
     }
 
-    private static void executeCommand(String[] tokenizedCommand) {
-        // The command-array is never empty, because spaces get removed by trim
-        // and splitting an empty string returns an array containing an empty
+    private static void executeCommand(String[] tokenizedInput) {
+        // The array is never empty, because spaces get removed by trim and
+        // splitting an empty string returns an array containing an empty
         // string.
-        String cmd = tokenizedCommand[0];
+        String cmd = tokenizedInput[0];
 
         switch (cmd) {
         case "new":
@@ -67,19 +67,19 @@ public final class Shell {
             break;
 
         case "add":
-            addToTrie(tokenizedCommand);
+            addToTrie(tokenizedInput);
             break;
 
         case "change":
-            changeValueInTrie(tokenizedCommand);
+            changeValueInTrie(tokenizedInput);
             break;
 
         case "delete":
-            removeFromTrie(tokenizedCommand);
+            removeFromTrie(tokenizedInput);
             break;
 
         case "points":
-            printValueFromTrie(tokenizedCommand);
+            printValueFromTrie(tokenizedInput);
             break;
 
         default:
@@ -88,66 +88,65 @@ public final class Shell {
         }
     }
 
-    private static void addToTrie(String[] tokenizedCommand) {
-        if (tokenizedCommand.length < 3) {
+    private static void addToTrie(String[] tokenizedInput) {
+        if (tokenizedInput.length < 3) {
             printError("Missing parameter(s). Key and Value required.");
             return;
         }
 
-        String key = tokenizedCommand[1];
-        String num = tokenizedCommand[2];
+        String key = tokenizedInput[1];
+        String num = tokenizedInput[2];
         if (isValidKey(key) && isValidNumber(num)) {
             Integer parsedNumber = Integer.valueOf(num);
-            // Show error message if adding fails.
-            if (!trie.add(key, parsedNumber)) {
+            boolean success = trie.add(key, parsedNumber);
+            if (!success) {
                 printError("The key \"" + key + 
                            "\" already has a value assigned.");
             }
         }
     }
 
-    private static void changeValueInTrie(String[] tokenizedCommand) {
-        if (tokenizedCommand.length < 3) {
+    private static void changeValueInTrie(String[] tokenizedInput) {
+        if (tokenizedInput.length < 3) {
             printError("Missing parameter(s). Key and Value required.");
             return;
         }
 
-        String key = tokenizedCommand[1];
-        String num = tokenizedCommand[2];
+        String key = tokenizedInput[1];
+        String num = tokenizedInput[2];
         if (isValidKey(key) && isValidNumber(num)) {
             Integer parsedNumber = Integer.valueOf(num);
-            // Show error message if key does not hold a value.
-            if (!trie.change(key, parsedNumber)) {
+            boolean success = trie.change(key, parsedNumber);
+            if (!success) {
                 printError("The key \"" + key + "\" does not hold a value.");
             }
         }
     }
 
-    private static void removeFromTrie(String[] tokenizedCommand) {
-        if (tokenizedCommand.length < 2) {
+    private static void removeFromTrie(String[] tokenizedInput) {
+        if (tokenizedInput.length < 2) {
             printError("Missing parameter. Key required.");
             return;
         }
 
-        String key = tokenizedCommand[1];
+        String key = tokenizedInput[1];
         if (isValidKey(key)) {
-            // Show error message if key does not hold a value.
-            if (!trie.remove(key)) {
+            boolean success = trie.remove(key);
+            if (!success) {
                 printError("The key \"" + key + "\" does not hold a value.");
             }
         }
     }
 
-    private static void printValueFromTrie(String[] tokenizedCommand) {
-        if (tokenizedCommand.length < 2) {
+    private static void printValueFromTrie(String[] tokenizedInput) {
+        if (tokenizedInput.length < 2) {
             printError("Missing parameter. Key required.");
             return;
         }
 
-        String key = tokenizedCommand[1];
+        String key = tokenizedInput[1];
         if (isValidKey(key)) {
             Integer points = trie.points(key);
-            // Show error message if key does not hold a value.
             if (points == null) {
                 printError("The key \"" + key + "\" does not hold a value.");
             }
@@ -156,9 +155,8 @@ public final class Shell {
     }
 
     private static boolean isValidKey(String key) {
-        // check each character individually
         for (char ch : key.toCharArray()) {
-            // check value because `Character.isLowerCase(ch)` returns true for
+            // Check value because `Character.isLowerCase(ch)` returns true for
             // characters outside the supported range (e.g.: ö, ü, ...).
             if (ch < 'a' || ch > 'z') {
                 printError("The key must contain lowercase letters only.");
