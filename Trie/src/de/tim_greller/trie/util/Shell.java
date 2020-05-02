@@ -35,7 +35,7 @@ public final class Shell {
                 new InputStreamReader(System.in));
 
         while (continueExecution) {
-            readInput(stdin);
+            processLine(stdin);
         }
 
         stdin.close();
@@ -49,7 +49,7 @@ public final class Shell {
      * @param stdin The BufferedReader for the standard input stream.
      * @throws IOException If an I/O error occurs.
      */
-    private static void readInput(BufferedReader stdin) throws IOException {
+    private static void processLine(BufferedReader stdin) throws IOException {
         System.out.print("trie> ");
         String input = stdin.readLine();
 
