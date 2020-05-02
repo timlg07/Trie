@@ -44,3 +44,5 @@ quit   Exits the program.
 
 Note that the key must contain lowercase letters only.
 ```
+
+A dialogue with the shell could look like this: [Tests.txt](Tests.txt)
