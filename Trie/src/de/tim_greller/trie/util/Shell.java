@@ -77,7 +77,7 @@ public final class Shell {
         // The array is never empty, because spaces get removed by trim and
         // splitting an empty string returns an array containing an empty
         // string.
-        String cmd = tokenizedInput[0];
+        String cmd = tokenizedInput[0].toLowerCase();
 
         switch (cmd) {
         case "new":
