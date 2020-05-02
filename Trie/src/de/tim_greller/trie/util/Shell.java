@@ -6,13 +6,30 @@ import java.io.InputStreamReader;
 
 import de.tim_greller.trie.model.Trie;
 
+/**
+ * The trie Shell enables direct user communication to perform operations 
+ * on a trie. 
+ */
 public final class Shell {
     
+    /** 
+     * Holds the current information about whether the program should continue
+     * execution or terminate after the current line of input is processed.
+     */
     private static boolean continueExecution = true;
+    
+    /** The trie on which every operation gets performed. */
     private static Trie trie = new Trie();
     
+    /** Private constructor to prevent instantiation. */
     private Shell() {}
     
+    /**
+     * The main method processes the input received on System.in (standard 
+     * input).
+     * @param args The arguments are ignored. All input must be sent per stdin.
+     * @throws IOException If an I/O error occurs.
+     */
     public static void main(String[] args) throws IOException {
         BufferedReader stdin = new BufferedReader(
                 new InputStreamReader(System.in));
@@ -24,6 +41,14 @@ public final class Shell {
         stdin.close();
     }
 
+    /**
+     * Reads the next input line and initiates the execution of it.
+     * Sets the {@code continueExecution} to false if EOF is reached.
+     * Performs no operation for blank lines.
+     * 
+     * @param stdin The BufferedReader for the standard input stream.
+     * @throws IOException If an I/O error occurs.
+     */
     private static void readInput(BufferedReader stdin) throws IOException {
         System.out.print("trie> ");
         String input = stdin.readLine();
@@ -43,6 +68,11 @@ public final class Shell {
         executeCommand(tokenizedInput);
     }
 
+    /**
+     * If the first token of the input is a valid command, it gets executed.
+     * 
+     * @param tokenizedInput The input containing command and parameters.
+     */
     private static void executeCommand(String[] tokenizedInput) {
         // The array is never empty, because spaces get removed by trim and
         // splitting an empty string returns an array containing an empty
@@ -88,6 +118,12 @@ public final class Shell {
         }
     }
 
+    /**
+     * If the second token contains a valid key and the third a valid Integer,
+     * the value gets added to the trie. 
+     * 
+     * @param tokenizedInput The input containing command and parameters.
+     */
     private static void addToTrie(String[] tokenizedInput) {
         if (tokenizedInput.length < 3) {
             printError("Missing parameter(s). Key and Value required.");
@@ -106,6 +142,12 @@ public final class Shell {
         }
     }
 
+    /**
+     * If the second token contains a valid key and the third a valid Integer,
+     * the value for the key in the trie gets updated.
+     * 
+     * @param tokenizedInput The input containing command and parameters.
+     */
     private static void changeValueInTrie(String[] tokenizedInput) {
         if (tokenizedInput.length < 3) {
             printError("Missing parameter(s). Key and Value required.");
@@ -122,7 +164,13 @@ public final class Shell {
             }
         }
     }
-
+    
+    /**
+     * If the second token contains a valid key the value at this position gets
+     * removed from the trie.
+     * 
+     * @param tokenizedInput The input containing command and parameter.
+     */
     private static void removeFromTrie(String[] tokenizedInput) {
         if (tokenizedInput.length < 2) {
             printError("Missing parameter. Key required.");
@@ -138,6 +186,12 @@ public final class Shell {
         }
     }
 
+    /**
+     * If the second token contains a valid key the value at this position in 
+     * the trie gets printed out.
+     * 
+     * @param tokenizedInput The input containing command and parameter.
+     */
     private static void printValueFromTrie(String[] tokenizedInput) {
         if (tokenizedInput.length < 2) {
             printError("Missing parameter. Key required.");
@@ -154,11 +208,18 @@ public final class Shell {
         }
     }
 
+    /**
+     * Checks if the given String consists of characters accepted by the trie as
+     * valid key.
+     * 
+     * @param key The key which characters should get cheked.
+     * @return Whether the key is valid or not.
+     */
     private static boolean isValidKey(String key) {
-        for (char ch : key.toCharArray()) {
+        for (char c : key.toCharArray()) {
             // Check value because `Character.isLowerCase(ch)` returns true for
             // characters outside the supported range (e.g.: ö, ü, ...).
-            if (ch < 'a' || ch > 'z') {
+            if (c < 'a' || c > 'z') {
                 printError("The key must contain lowercase letters only.");
                 return false;
             }
@@ -166,6 +227,12 @@ public final class Shell {
         return true;
     }
 
+    /**
+     * Checks if the given String is a valid Integer representation.
+     * 
+     * @param val The String representation of the value.
+     * @return Whether the value can be parsed to an Integer or not.
+     */
     private static boolean isValidNumber(String val) {
         try {
             Integer.valueOf(val);
@@ -176,11 +243,21 @@ public final class Shell {
         return true;
     }
 
+    /**
+     * Prints an error text accepted by the <i>Praktomat</i> containing the 
+     * given message.
+     * 
+     * @param msg The message which should describe the error.
+     */
     private static void printError(String msg) {
         System.out.println("Error! " + msg);
         System.out.println("Enter 'help' to display the syntax.");
     }
 
+    /**
+     * Prints a help text about the usage of the trie Shell including all
+     * supported commands with their syntax and a description.
+     */
     private static void printHelp() {
         System.out.println(
               "Trie enables you to store integers in a tree data structure "

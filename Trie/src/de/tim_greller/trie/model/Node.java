@@ -1,5 +1,10 @@
 package de.tim_greller.trie.model;
 
+/**
+ * This class provides the Node elements used to build the trie data structure.
+ * It provides methods necessary to navigate through the trie, output it and 
+ * change it.
+ */
 public class Node {
 
     private char ch;
@@ -7,10 +12,17 @@ public class Node {
     private Node[] children;
     private Integer points;
 
+    /** Creates a root Node with the character '+' and no parent. */
     public Node() {
         this('+', null);
     }
 
+    /**
+     * Creates a new Node with the given character and parent.
+     * 
+     * @param ch      The character the new Node gets created for.
+     * @param parent  The parent of the new Node.
+     */
     public Node(char ch, Node parent) {
         this.ch = ch;
         this.parent = parent;
@@ -18,6 +30,14 @@ public class Node {
         this.points = null;
     }
 
+    /**
+     * Searches for the Node with the given {@code key} in the current sub-trie
+     * recursively and returns it if it exists and {@code null} otherwise.
+     * 
+     * @param key The key to search after in the children of this Node.
+     * @return The Node at the given {@code key} or {@code null} if it does not 
+     *         exist.
+     */
     public Node find(String key) {
         // Base case: reached end of key.
         if (key.isEmpty()) {
@@ -26,22 +46,33 @@ public class Node {
 
         Node next = getChild(key.charAt(0));
         String remainingKey = key.substring(1);
+        
         // Return null if the searched Node does not exist.
         if (next == null) {
             return null;
         }
+        
         // Recursively continue at the next level.
         return next.find(remainingKey);
     }
 
+    /**
+     * Removes itself and all now unnecessary parent Nodes from the trie.
+     */
     public void remove() {
         setPoints(null);
         parent.cleanup(ch - 'a');
     }
 
+    /**
+     * Removes all unnecessary parent Nodes.
+     * 
+     * @param index The array-index from the child which called the cleanup.
+     */
     private void cleanup(int index) {
         if (children[index].isUnnecessary()) {
             children[index] = null;
+            
             // Stop recursion when root is reached.
             if (parent != null) {
                 parent.cleanup(ch - 'a');
@@ -49,11 +80,21 @@ public class Node {
         }
     }
 
-    // A node is considered unnecessary if it contains no value and no children.
+    /**
+     * This Node is considered unnecessary if it contains no value or children.
+     * 
+     * @return whether this Node is unnecessary or not.
+     */
     private boolean isUnnecessary() {
         return getPoints() == null && !hasChildren();
     }
 
+    /**
+     * Returns a string that textually represents this object and its children.
+     * 
+     * @return A string representation of the current sub-trie containing
+     *         structure and stored data.
+     */
     @Override
     public String toString() {
         StringBuilder stringRepresentation = new StringBuilder();
@@ -76,6 +117,10 @@ public class Node {
         return stringRepresentation.toString();
     }
 
+    /**
+     * Returns {@code true} if this Node has one or more children.
+     * @return Whether this Node has children or not.
+     */
     private boolean hasChildren() {
         boolean result = false;
         for (Node child : children) {
@@ -86,19 +131,41 @@ public class Node {
         return result;
     }
 
+    /**
+     * Get the child representing the given character.
+     * 
+     * @param ch The character of the requested child.
+     * @return The child or {@code null} if it does not exist.
+     */
     public Node getChild(char ch) {
         return children[ch - 'a'];
     }
 
+    /**
+     * Sets the child representing the given character.
+     * 
+     * @param ch The character of the new child.
+     * @param child The new Node which should be added as child of this Node.
+     */
     // if this should be private how is the trie supposed to add any elements?
     /*private*/ void setChild(char ch, Node child) {
         children[ch - 'a'] = child;
     }
 
+    /**
+     * Sets the value of this Node.
+     * 
+     * @param points The new point value.
+     */
     public void setPoints(Integer points) {
         this.points = points;
     }
 
+    /**
+     * Returns the value of this Node.
+     * 
+     * @return The point value stored in this Node.
+     */
     public Integer getPoints() {
         return points;
     }
