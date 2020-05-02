@@ -29,7 +29,7 @@ And its string representation is:
 
 ## Shell
 The shell holds and manages a trie on which you can perform a set of different operations. The `help` command lists all of the available commands with their syntax:
-<pre>
+```
 Trie enables you to store integers in a tree data structure using strings as keys.
 
 Available commands:
@@ -43,4 +43,4 @@ new    Creates a new trie and discards the old data structure.
 quit   Exits the program.
 
 Note that the key must contain lowercase letters only.
-</pre>
+```
