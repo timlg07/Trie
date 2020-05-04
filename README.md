@@ -2,7 +2,7 @@
 An implementation of the trie data structure in Java with an inbuilt shell to execute commands.
   
 ## Documentation
-The Javadoc is available at https://tim-greller.de/data/Trie/JavaDoc/.
+The Javadoc is available at [tim-greller.de/data/Trie/JavaDoc](https://tim-greller.de/data/Trie/JavaDoc/).
 
 ## Data Structure
 The basic form is that of a linked set of nodes, where each node contains an array of child pointers, one for each symbol in the alphabet.
