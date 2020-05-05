@@ -26,9 +26,12 @@ public class Node {
     public Node(char ch, Node parent) {
         this.ch = ch;
         this.parent = parent;
-        this.parent.setChild(ch, this);
         this.children = new Node[26];
         this.points = null;
+        
+        if(parent != null) {
+            parent.setChild(ch, this);
+        }
     }
 
     /**
