@@ -7,6 +7,9 @@ package de.tim_greller.trie.model;
  */
 public class Node {
 
+    private static final char FIRST_CHAR = 'a';
+    private static final char LAST_CHAR = 'z';
+    
     private char ch;
     private Node parent;
     private Node[] children;
@@ -26,7 +29,7 @@ public class Node {
     public Node(char ch, Node parent) {
         this.ch = ch;
         this.parent = parent;
-        this.children = new Node[26];
+        this.children = new Node[LAST_CHAR - FIRST_CHAR + 1];
         this.points = null;
         
         if(parent != null) {
@@ -65,7 +68,7 @@ public class Node {
      */
     public void remove() {
         setPoints(null);
-        parent.cleanup(ch - 'a');
+        parent.cleanup(calculateIndex(ch));
     }
 
     /**
@@ -79,7 +82,7 @@ public class Node {
             
             // Stop recursion when root is reached.
             if (parent != null) {
-                parent.cleanup(ch - 'a');
+                parent.cleanup(calculateIndex(ch));
             }
         }
     }
@@ -142,7 +145,7 @@ public class Node {
      * @return The child or {@code null} if it does not exist.
      */
     public Node getChild(char ch) {
-        return children[ch - 'a'];
+        return children[calculateIndex(ch)];
     }
 
     /**
@@ -152,7 +155,7 @@ public class Node {
      * @param child The new Node which should be added as child of this Node.
      */
     private void setChild(char ch, Node child) {
-        children[ch - 'a'] = child;
+        children[calculateIndex(ch)] = child;
     }
 
     /**
@@ -171,6 +174,17 @@ public class Node {
      */
     public Integer getPoints() {
         return points;
+    }
+    
+    /**
+     * Calculates the index of the given char in an array ranging from 
+     * {@code FIRST_CHAR} to {@code LAST_CHAR}.
+     * 
+     * @param ch The character which index should be calculated.
+     * @return The array index of the character {@code ch}.
+     */
+    private int calculateIndex(char ch) {
+        return ch - FIRST_CHAR;
     }
 
 }
