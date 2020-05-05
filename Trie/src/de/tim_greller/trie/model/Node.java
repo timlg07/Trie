@@ -26,6 +26,7 @@ public class Node {
     public Node(char ch, Node parent) {
         this.ch = ch;
         this.parent = parent;
+        this.parent.setChild(ch, this);
         this.children = new Node[26];
         this.points = null;
     }
@@ -147,8 +148,7 @@ public class Node {
      * @param ch The character of the new child.
      * @param child The new Node which should be added as child of this Node.
      */
-    // if this should be private how is the trie supposed to add any elements?
-    /*private*/ void setChild(char ch, Node child) {
+    private void setChild(char ch, Node child) {
         children[ch - 'a'] = child;
     }
 

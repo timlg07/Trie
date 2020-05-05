@@ -32,7 +32,6 @@ public class Trie {
             Node child = iterator.getChild(c);
             if (child == null) {
                 child = new Node(c, iterator);
-                iterator.setChild(c, child);
             }
             iterator = child;
         }
