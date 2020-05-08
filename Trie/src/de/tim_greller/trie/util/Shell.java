@@ -22,7 +22,7 @@ public final class Shell {
     private static Trie trie = new Trie();
     
     /** Private constructor to prevent instantiation. */
-    private Shell() {}
+    private Shell() { }
     
     /**
      * The main method processes the input received on System.in (standard 
@@ -136,10 +136,10 @@ public final class Shell {
      */
     private static boolean hasEnoughParameters(String[] tokenizedInput, 
             int requiredParameters) {
-        int givenParameters = tokenizedInput.length - 1 /* command token */ ;
+        int givenParameters = tokenizedInput.length - 1 /* command token */;
         if (givenParameters < requiredParameters) {
-            printError("Missing parameters. " + givenParameters + 
-                       " recieved, but " + requiredParameters + " required.");
+            printError("Missing parameters. " + givenParameters 
+                     + " recieved, but " + requiredParameters + " required.");
             return false;
         }
         return true;
@@ -158,8 +158,8 @@ public final class Shell {
             Integer parsedNumber = Integer.valueOf(num);
             boolean success = trie.add(key, parsedNumber);
             if (!success) {
-                printError("The key \"" + key + 
-                           "\" already has a value assigned.");
+                printError("The key \"" + key 
+                         + "\" already has a value assigned.");
             }
         }
     }

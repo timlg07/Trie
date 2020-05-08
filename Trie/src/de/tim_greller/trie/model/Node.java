@@ -32,7 +32,7 @@ public class Node {
         this.children = new Node[LAST_CHAR - FIRST_CHAR + 1];
         this.points = null;
         
-        if(parent != null) {
+        if (parent != null) {
             parent.setChild(ch, this);
         }
     }
