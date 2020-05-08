@@ -97,25 +97,52 @@ public final class Shell {
             break;
 
         case "add":
-            addToTrie(tokenizedInput);
+            if (hasEnoughParameters(tokenizedInput, 2)) {
+                addToTrie(tokenizedInput);
+            }
             break;
 
         case "change":
-            changeValueInTrie(tokenizedInput);
+            if (hasEnoughParameters(tokenizedInput, 2)) {
+                changeValueInTrie(tokenizedInput);
+            }
             break;
 
         case "delete":
-            removeFromTrie(tokenizedInput);
+            if (hasEnoughParameters(tokenizedInput, 1)) {
+                removeFromTrie(tokenizedInput);
+            }
             break;
 
         case "points":
-            printValueFromTrie(tokenizedInput);
+            if (hasEnoughParameters(tokenizedInput, 1)) {
+                printValueFromTrie(tokenizedInput);
+            }
             break;
 
         default:
             printError("Unknown command \"" + cmd + "\"");
             break;
         }
+    }
+    
+    /**
+     * Checks if the input contains enough parameters. Prints an error message
+     * if given less parameters than required.
+     * 
+     * @param tokenizedInput The input split in its tokens.
+     * @param requiredParameters The amount of required parameters.
+     * @return Whether the input contains enough parameters.
+     */
+    private static boolean hasEnoughParameters(String[] tokenizedInput, 
+            int requiredParameters) {
+        int givenParameters = tokenizedInput.length - 1 /* command token */ ;
+        if (givenParameters < requiredParameters) {
+            printError("Missing parameters. " + givenParameters + 
+                       " recieved, but " + requiredParameters + " required.");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -125,11 +152,6 @@ public final class Shell {
      * @param tokenizedInput The input containing command and parameters.
      */
     private static void addToTrie(String[] tokenizedInput) {
-        if (tokenizedInput.length < 3) {
-            printError("Missing parameter(s). Key and Value required.");
-            return;
-        }
-
         String key = tokenizedInput[1];
         String num = tokenizedInput[2];
         if (isValidKey(key) && isValidNumber(num)) {
@@ -149,11 +171,6 @@ public final class Shell {
      * @param tokenizedInput The input containing command and parameters.
      */
     private static void changeValueInTrie(String[] tokenizedInput) {
-        if (tokenizedInput.length < 3) {
-            printError("Missing parameter(s). Key and Value required.");
-            return;
-        }
-
         String key = tokenizedInput[1];
         String num = tokenizedInput[2];
         if (isValidKey(key) && isValidNumber(num)) {
@@ -172,11 +189,6 @@ public final class Shell {
      * @param tokenizedInput The input containing command and parameter.
      */
     private static void removeFromTrie(String[] tokenizedInput) {
-        if (tokenizedInput.length < 2) {
-            printError("Missing parameter. Key required.");
-            return;
-        }
-
         String key = tokenizedInput[1];
         if (isValidKey(key)) {
             boolean success = trie.remove(key);
@@ -193,11 +205,6 @@ public final class Shell {
      * @param tokenizedInput The input containing command and parameter.
      */
     private static void printValueFromTrie(String[] tokenizedInput) {
-        if (tokenizedInput.length < 2) {
-            printError("Missing parameter. Key required.");
-            return;
-        }
-
         String key = tokenizedInput[1];
         if (isValidKey(key)) {
             Integer points = trie.points(key);
