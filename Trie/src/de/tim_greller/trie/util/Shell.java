@@ -130,9 +130,9 @@ public final class Shell {
      * Checks if the input contains enough parameters. Prints an error message
      * if given less parameters than required.
      * 
-     * @param tokenizedInput The input split in its tokens.
+     * @param tokenizedInput The full input split in its tokens.
      * @param requiredParameters The amount of required parameters.
-     * @return Whether the input contains enough parameters.
+     * @return {@code true} if the input contains enough parameters.
      */
     private static boolean hasEnoughParameters(String[] tokenizedInput, 
             int requiredParameters) {
